@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <conio.h>
+#include <windows.h>
 
 void screen(front_x, front_y, fruit_x, fruit_y) {
     int i, j;
@@ -9,87 +11,46 @@ void screen(front_x, front_y, fruit_x, fruit_y) {
     //top
     printf("+--------------------+\n");
 
+    //printing the actual lines
     for (j = 1; j <= 10; ++j) {
-        //fruit and snek in same line
-        if (front_y == fruit_y && front_y == j){
-            printf("|");
-            //snek lefter than fruit
-            if(front_x<fruit_x){
-                for (i = 1; i < front_x; ++i) {
-                    printf(" ");
-                }
+        printf("|");
+        for (i = 1; i <= 20; ++i) {
+            if(front_x==i && front_y==j){
                 printf("0");
-                for (i = 1; i < fruit_x-(front_x); ++i) {
-                    printf(" ");
-                }
+                continue;
+            }
+            if (fruit_x==i && fruit_y==j){
                 printf("F");
-                for (i = 1; i <= 20-(fruit_x); ++i) {
-                    printf(" ");
-                }
-
+                continue;
             }
-            //snek righter than fruit
-            if(front_x>fruit_x){
-                for (i = 1; i < fruit_x; ++i) {
-                    printf(" ");
-                }
-                printf("0");
-                for (i = 1; i < front_x-(fruit_x); ++i) {
-                    printf(" ");
-                }
-                printf("F");
-                for (i = 1; i <= 20-(front_x); ++i) {
-                    printf(" ");
-                }
-
-            }
-
-            printf("|\n");
-            continue;
+            printf(" ");
         }
+        printf("|\n");
 
-
-        //snek line
-        if (front_y==j){
-            printf("|");
-            for (i = 1; i < front_x; ++i) {
-                printf(" ");
-            }
-            printf("0");
-            for (i = 1; i <= 20-(front_x); ++i) {
-                printf(" ");
-            }
-            printf("|\n");
-
-            continue;
-        }
-
-        //fruit line
-        if (fruit_y==j){
-            printf("|");
-            for (i = 1; i < fruit_x; ++i) {
-                printf(" ");
-            }
-            printf("F");
-            for (i = 1; i <= 20-(fruit_x); ++i) {
-                printf(" ");
-            }
-            printf("|\n");
-
-            continue;
-        }
-
-        //empty line
-            printf("|                    |\n");
     }
 
     //bottom line
     printf("+--------------------+\n");
 }
 
+//int move() {
+//    int key;
+//    while(1) {
+//        if (_kbhit())
+//            key = _getch();
+//            // do stuff depending on key_code
+//        else
+//            key = 0;
+//        Sleep(100);
+//        printf("%d", key);
+//    }
+//
+//    return key;
+//}
+
 int snek(){
-    int snake_lenght, game=1;
-    int direction, score = 0;
+    int score, game=1;
+    int direction;
     int snek_x = 10, snek_y = 5;
     int fruit_x , fruit_y;
 
@@ -101,10 +62,11 @@ int snek(){
     while(game == 1) {
 
         screen(snek_x, snek_y, fruit_x, fruit_y);
+//        move();
         game = 0;
 
     }
-    return score;
+    return 0;
 }
 
 
