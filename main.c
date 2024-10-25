@@ -33,24 +33,45 @@ void screen(front_x, front_y, fruit_x, fruit_y) {
     printf("+--------------------+\n");
 }
 
-//int move() {
-//    int key;
-//    while(1) {
-//        if (_kbhit())
-//            key = _getch();
-//            // do stuff depending on key_code
-//        else
-//            key = 0;
-//        Sleep(100);
+int move(direction) {
+    int key = direction;
+        Sleep(400);
+        if (kbhit()) {
+            switch (tolower(getch())) {
+                case 'a':
+                    if(key!=2)
+                        key = 1;
+                    break;
+                case 'd':
+                    if(key!=1)
+                        key = 2;
+                    break;
+                case 'w':
+                    if(key!=4)
+                        key = 3;
+                    break;
+                case 's':
+                    if(key!=3)
+                        key = 4;
+                    break;
+                case 'x':
+                    key = 5;
+                    break;
+                default:
+
+                    break;
+            }
+
+        }
 //        printf("%d", key);
-//    }
-//
-//    return key;
-//}
+
+
+    return key;
+}
 
 int snek(){
     int score, game=1;
-    int direction;
+    int direction, prev_directon;
     int snek_x = 10, snek_y = 5;
     int fruit_x , fruit_y;
 
@@ -62,8 +83,29 @@ int snek(){
     while(game == 1) {
 
         screen(snek_x, snek_y, fruit_x, fruit_y);
-//        move();
-        game = 0;
+        prev_directon=direction;
+        direction=move(prev_directon);
+        switch (direction) {
+            case 1:
+                snek_x--;
+                break;
+            case 2:
+                snek_x++;
+                break;
+            case 3:
+                snek_y--;
+                break;
+            case 4:
+                snek_y++;
+                break;
+            case 5:
+                game=0;
+                break;
+
+        }
+        system("cls");
+
+
 
     }
     return 0;
