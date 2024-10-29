@@ -39,17 +39,15 @@ void screen(int *front_x,int *front_y,int fruit_x,int fruit_y, int score) {
             printf(" ");
         }
         printf("|\n");
-
     }
 
     //bottom line
     printf("+--------------------+\n");
-
     printf("WASD to move\nX to exit");
 }
 
 //input recognition
-int move(direction) {
+int move(int direction) {
     int key = direction;
         Sleep(400);
         if (kbhit()) {
@@ -74,14 +72,9 @@ int move(direction) {
                     key = 5;
                     break;
                 default:
-
                     break;
             }
-
         }
-//        printf("%d", key);
-
-
     return key;
 }
 
@@ -95,7 +88,6 @@ int snek(){
     snek_x[0] = 10;
     snek_y[0] = 5;
 
-
     srand(time(NULL));
 
     fruit_x = (rand() % 20)+1;
@@ -106,6 +98,7 @@ int snek(){
         screen(snek_x, snek_y, fruit_x, fruit_y, score);
         prev_direction=direction;
         direction=move(prev_direction);
+
         //movement
         switch (direction) {
             case 1:
@@ -139,10 +132,8 @@ int snek(){
             case 5:
                 game=0;
                 break;
-
             default:
                 break;
-
         }
 
         //check if snek eats fruit
@@ -163,32 +154,22 @@ int snek(){
                 }
             }
         }
+
         //check if snek ran into itself
         for (i = 1; i < score; i++) {
             if(snek_x[0]==snek_x[i] && snek_y[0]==snek_y[i]) game=0;
-
         }
         // check if snek ran into a wall
         if(snek_x[0]>19 || snek_x[0]<1 || snek_y[0]>10 || snek_y[0]<1) game =0;
 
-
         system("cls");
-
-
-
     }
     return score;
 }
 
-
-
 int main(void) {
     int score;
     score = snek()-1;
-
     printf("Your final score is %d", score);
-
-
     return 0;
-
 }
