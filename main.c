@@ -6,8 +6,11 @@
 
 void screen(int *front_x,int *front_y,int fruit_x,int fruit_y, int score) {
     int i, j,k;
+
+    printf("Score: %d\n", score-1);
     printf("snek: %d %d\n", front_x[0], front_y[0]);
     printf("fruit: %d %d\n", fruit_x, fruit_y);
+
     //top
     printf("+--------------------+\n");
 
@@ -15,7 +18,7 @@ void screen(int *front_x,int *front_y,int fruit_x,int fruit_y, int score) {
     for (j = 1; j <= 10; ++j) {
         printf("|");
         for (i = 1; i <= 20; ++i) {
-            for (k = 0; k < score; k++) {
+            for (k = 1; k < score; k++) {
                 if(front_x[k]==i && front_y[k]==j){
                     printf("o");
                     k=999;
@@ -41,8 +44,11 @@ void screen(int *front_x,int *front_y,int fruit_x,int fruit_y, int score) {
 
     //bottom line
     printf("+--------------------+\n");
+
+    printf("WASD to move\nX to exit");
 }
 
+//input recognition
 int move(direction) {
     int key = direction;
         Sleep(400);
@@ -80,11 +86,11 @@ int move(direction) {
 }
 
 int snek(){
-    int score = 0, game=1;
-    int direction, prev_directon;
-    int snek_x[20], snek_y[20];
+    int score = 1, game=1;
+    int direction, prev_direction;
+    int snek_x[200], snek_y[200];
     int fruit_x , fruit_y;
-    int i,j;
+    int i;
 
     snek_x[0] = 10;
     snek_y[0] = 5;
@@ -98,8 +104,9 @@ int snek(){
     while(game == 1) {
 
         screen(snek_x, snek_y, fruit_x, fruit_y, score);
-        prev_directon=direction;
-        direction=move(prev_directon);
+        prev_direction=direction;
+        direction=move(prev_direction);
+        //movement
         switch (direction) {
             case 1:
                 for (i = score; i >= 1; i--) {
@@ -133,39 +140,55 @@ int snek(){
                 game=0;
                 break;
 
+            default:
+                break;
+
         }
 
+        //check if snek eats fruit
         if (snek_x[0]==fruit_x && snek_y[0]==fruit_y){
             int g_roll=0;
             score+=1;
+            //new fruit creation
             while(g_roll==0) {
+                fruit_x = (rand() % 20) + 1;
+                fruit_y = (rand() % 10) + 1;
                 for (i = 0; i < score; i++) {
-                    fruit_x = (rand() % 20) + 1;
-                    fruit_y = (rand() % 10) + 1;
                     if (fruit_x == snek_x[i] && fruit_y == snek_y[i]) {
                         g_roll = 0;
                         break;
                     }
-                }
-                g_roll=1;
-            }
+                    g_roll=1;
 
+                }
+            }
+        }
+        //check if snek ran into itself
+        for (i = 1; i < score; i++) {
+            if(snek_x[0]==snek_x[i] && snek_y[0]==snek_y[i]) game=0;
 
         }
+        // check if snek ran into a wall
+        if(snek_x[0]>19 || snek_x[0]<1 || snek_y[0]>10 || snek_y[0]<1) game =0;
+
+
         system("cls");
 
 
 
     }
-    return 0;
+    return score;
 }
 
 
 
 int main(void) {
-snek();
+    int score;
+    score = snek()-1;
 
-    //system("cls");
+    printf("Your final score is %d", score);
+
+
     return 0;
 
 }
